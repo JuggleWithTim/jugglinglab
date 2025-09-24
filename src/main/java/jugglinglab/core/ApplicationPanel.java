@@ -159,6 +159,15 @@ public class ApplicationPanel extends JPanel implements ActionListener {
                 PatternWindow jaw2 = null;
                 try {
                     ParameterList pl = fcontrol.getParameterList();
+                    if (pl.getParameter("pattern") != null && pl.getParameter("pattern").equalsIgnoreCase("doom")) {
+                        try {
+                            ProcessBuilder pb = new ProcessBuilder("java", "-jar", "bin/mochadoom.jar");
+                            pb.start();
+                        } catch (Exception e) {
+                            new ErrorDialog(ApplicationPanel.this, "Error launching Doom: " + e.getMessage());
+                        }
+                        return;
+                    }
                     Pattern p = fcontrol.newPattern().fromParameters(pl);
                     AnimationPrefs jc = (new AnimationPrefs()).fromParameters(pl);
                     pl.errorIfParametersLeft();
